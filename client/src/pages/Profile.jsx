@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../Context/UserContext";
 import toast from "react-hot-toast";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { serverUrl } = useContext(DataContext);
@@ -40,6 +41,24 @@ const Profile = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const navigate = useNavigate();
+  const deleteHandler = async (id) => {
+    try {
+      if (!id) {
+        return console.log("id undefined");
+      }
+      const res = await axios.post(
+        serverUrl + "/delete/" + id,
+        {},
+        { withCredentials: true }
+      );
+      toast.success(res.data.message);
+      fetchData();
+      navigate("/profile");
+    } catch (error) {
+      console.log("delete post error", error);
+    }
+  };
 
   // ⏳ While data is loading
   if (!info) {
@@ -50,18 +69,12 @@ const Profile = () => {
     <div className="w-screen bg-zinc-700 text-white p-4">
       <div className="ml-2">
         <div className="flex gap-4 items-center mb-4">
-          <a
+          <Link
             className="text-blue-400 inline-block border border-zinc-500 rounded-md px-2 py-1 hover:bg-zinc-600"
-            href="/img-upload"
+            to={"/img-upload"}
           >
             Click here to upload your pic
-          </a>
-          <a
-            className="text-blue-400 inline-block border border-zinc-500 rounded-md px-2 py-1 hover:bg-zinc-600"
-            href="/user-post"
-          >
-            See others' posts
-          </a>
+          </Link>
         </div>
 
         <div className="profilepic flex items-center gap-3 mb-4">
@@ -113,12 +126,18 @@ const Profile = () => {
                   <h1 className="text-blue-500 mb-2">@{info.username}</h1>
                   <p className="text-sm tracking-tight">{post.content}</p>
                   <div className="btns flex mt-4 gap-2">
-                    <a className="text-blue-400" href={`/likes/${post._id}`}>
+                    <Link className="text-blue-400" to={`/likes/${post._id}`}>
                       Like
-                    </a>
-                    <a className="text-zinc-400" href={`/edit/${post._id}`}>
+                    </Link>
+                    <Link className="text-zinc-400" to={`/edit/${post._id}`}>
                       Edit
-                    </a>
+                    </Link>
+                    <button
+                      onClick={() => deleteHandler(post._id)}
+                      className="text-zinc-400 cursor-pointer"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               ))}

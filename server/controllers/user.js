@@ -187,13 +187,11 @@ const profilePicController = async (req, res) => {
     res.status(200).json({ success: true, message: "Pic upload successfully" });
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Intarnal server error",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Intarnal server error",
+      error: error.message,
+    });
   }
 };
 
@@ -210,6 +208,24 @@ const getAllPostSeeController = async (req, res) => {
     .json({ success: true, message: "data fatched", user: allUser });
 };
 
+// delete post
+const deletePostController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await postModel.findByIdAndDelete({ _id: id });
+    res.status(200).json({ success: true, message: "post deleted" });
+  } catch (error) {
+    console.log("deletePost error", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      });
+  }
+};
+
 export {
   registerController,
   loginController,
@@ -221,4 +237,5 @@ export {
   editProfilePostController,
   profilePicController,
   getAllPostSeeController,
+  deletePostController,
 };

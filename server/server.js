@@ -8,10 +8,12 @@ import cors from "cors";
 
 connectDB();
 
-app.use(cors({
-  origin: "http://localhost:5173", // ✅ frontend ka URL
-  credentials: true,               // ✅ allow cookies
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // ✅ frontend ka URL
+    credentials: true, // ✅ allow cookies
+  })
+);
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

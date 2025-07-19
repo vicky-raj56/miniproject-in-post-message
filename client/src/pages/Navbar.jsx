@@ -13,11 +13,10 @@ const Navbar = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        setIsAuthenticated(true);
-        navigate("/login");
-      }else{
         setIsAuthenticated(false);
-
+        navigate("/login");
+      } else {
+        setIsAuthenticated(false);
       }
     }
   };
@@ -42,6 +41,13 @@ const Navbar = () => {
         >
           profile
         </Link>
+
+        <Link
+          className=" text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold   px-2 py-2  "
+          to={"/showPost"}
+        >
+          see-other-posts
+        </Link>
         {isAuthenticated ? (
           <button
             onClick={logutHandler}
@@ -57,12 +63,6 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        <Link
-            className=" text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold   px-2 py-2  "
-            to={"/showPost"}
-          >
-            see-other-posts
-          </Link>
       </nav>
     </div>
   );

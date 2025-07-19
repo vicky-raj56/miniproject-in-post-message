@@ -26,7 +26,7 @@ const ShowPost = () => {
   return (
     <div className="w-screen bg-zinc-700 text-white p-4">
       <div className="Posts mt-20">
-        <h3 className="text-zinc-400 mb-2">Your Posts:</h3>
+        <h3 className="text-zinc-400 mb-2">All Users Posts:</h3>
         <div className="postContainer flex gap-4  flex-wrap   mt-4">
           {/* {(data.posts || [])
               .slice() // ✅ copy array

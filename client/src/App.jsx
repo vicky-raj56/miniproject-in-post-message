@@ -1,7 +1,7 @@
 import "./App.css";
 
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
@@ -12,6 +12,8 @@ import Navbar from "./pages/Navbar";
 import ImageUpload from "./pages/ImageUpload";
 import Home from "./pages/Home";
 import ProctedRoute from "./protectedRoute/ProctedRoute";
+// import { path } from 'path';
+import PageNotFound from "./pagenotfound/PageNotFound";
 
 const App = () => {
   return (
@@ -54,7 +56,9 @@ const App = () => {
               </ProctedRoute>
             }
           />
+          <Route path="*" element={<PageNotFound/>} />
         </Routes>
+        
       </BrowserRouter>
       <Toaster />
     </>
