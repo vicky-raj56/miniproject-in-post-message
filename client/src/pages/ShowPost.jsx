@@ -41,7 +41,7 @@ const ShowPost = () => {
               >
                 <h1 className="text-blue-500 mb-2">@ {post.username}</h1>
                 <p className="text-sm tracking-tight">{user.content}</p>
-                  <small class="mt-2 block">
+                  <small className="mt-2 block">
                 { user.likes?.length || 0 }Likes</small>
                 <div className="btns flex mt-4 gap-2">
 

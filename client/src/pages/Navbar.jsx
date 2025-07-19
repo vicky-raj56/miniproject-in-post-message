@@ -39,26 +39,26 @@ const Navbar = () => {
           className=" text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold   px-2 py-2  "
           to={"/profile"}
         >
-          profile
+          Profile
         </Link>
 
         <Link
           className=" text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold   px-2 py-2  "
           to={"/showPost"}
         >
-          see-other-posts
+          See-other-posts
         </Link>
         {isAuthenticated ? (
           <button
             onClick={logutHandler}
-            className="text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold px-2 py-2 bg-transparent border-none"
+            className="text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold px-2 py-2 "
           >
             Logout
           </button>
         ) : (
           <Link
             className=" text-md cursor-pointer hover:border-b-2 hover:border-red-700 font-semibold   px-2 py-2  "
-            to={"/login"}
+            to={"/Login"}
           >
             Login
           </Link>

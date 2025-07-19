@@ -33,21 +33,21 @@ const ImageUpload = () => {
     }
   };
   return (
-    <div class="w-full h-screen bg-zinc-700 text-white">
-      {/* <h1 class="text-xl mb-2">Upload your image</h1> */}
+    <div className="w-full h-screen bg-zinc-700 text-white">
+      {/* <h1 className="text-xl mb-2">Upload your image</h1> */}
       <form onSubmit={submitHandler}>
         <div>
           {/* <!-- <input  type="file" name="image" value="chooseImage" /> --> */}
-          <label class="block text-white mb-2">Upload your image</label>
+          <label className="block text-white mb-2">Upload your image</label>
           <input
             onChange={inputHandler}
             type="file"
             name="image"
-            class="text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="text-sm cursor-pointer text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
 
           <input
-            class="bg-blue-500 px-2 py-2 text-xl rounded-[10px] cursor-pointer"
+            className="bg-blue-500 px-2 py-2 text-xl rounded-[10px] cursor-pointer"
             type="submit"
             value="Upload image"
           />

@@ -60,6 +60,26 @@ const Profile = () => {
     }
   };
 
+  // like handler
+  const likehandler = async (id) => {
+    try {
+      if (!id) {
+        return console.log("id undefined");
+      }
+      const res = await axios.post(
+        serverUrl + "/likes/" + id,
+        {},
+        { withCredentials: true }
+      );
+      toast.success(res.data.message);
+      fetchData();
+      navigate("/profile");
+    } catch (error) {
+      console.log("delete post error", error);
+      toast.error(error.response?.data?.message || "somthing went wrong");
+    }
+  };
+
   // ⏳ While data is loading
   if (!info) {
     return <div className="text-white p-4">Loading your profile...</div>;
@@ -126,9 +146,12 @@ const Profile = () => {
                   <h1 className="text-blue-500 mb-2">@{info.username}</h1>
                   <p className="text-sm tracking-tight">{post.content}</p>
                   <div className="btns flex mt-4 gap-2">
-                    <Link className="text-blue-400" to={`/likes/${post._id}`}>
-                      Like
-                    </Link>
+                    <button
+                      onClick={() => likehandler(post._id)}
+                      className="text-blue-400 bg-transparent border-none cursor-pointer"
+                    >
+                      {post.likes.indexOf(info._id) === -1 ? "Like" : "Unlike"}
+                    </button>
                     <Link className="text-zinc-400" to={`/edit/${post._id}`}>
                       Edit
                     </Link>

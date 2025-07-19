@@ -55,7 +55,7 @@ const EditPost = () => {
     return <div>loading....</div>;
   }
   return (
-    <div classNameName="ml-2">
+    <div className="ml-2">
       <h5 className="mb-5 mt-6 ">edit your post.</h5>
       <form onSubmit={submitHandler}>
         <textarea

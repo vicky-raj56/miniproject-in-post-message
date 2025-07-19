@@ -127,8 +127,7 @@ const profileController = async (req, res) => {
 
     exstinguser.posts.push(newUser._id);
     await exstinguser.save();
-    // res.status(200).send({user:exstinguser})
-    // res.redirect("/profile");
+
     res.status(200).json({ success: true, message: "post craeted" });
   } catch (error) {
     console.log(error);
@@ -141,17 +140,34 @@ const profileController = async (req, res) => {
 };
 
 const profileLikesController = async (req, res) => {
-  const post = await postModel.findOne({ _id: req.params.id }).populate("user");
-  // console.log(post.user)
-  if (post.likes.indexOf(req.user.userId) === -1) {
-    post.likes.push(req.user.userId);
-  } else {
-    post.likes.splice(post.likes.indexOf(req.user.userId), 1);
-  }
-  await post.save();
+  try {
+    const post = await postModel
+      .findOne({ _id: req.params.id })
+      .populate("user");
 
-  res.redirect("/profile");
+    let message = ""; // 🔄 dynamic message
+
+    if (post.likes.indexOf(req.user.userId) === -1) {
+      post.likes.push(req.user.userId);
+      message = "You liked the post"; // ✅ Like message
+    } else {
+      post.likes.splice(post.likes.indexOf(req.user.userId), 1);
+      message = "You unliked the post"; // ✅ Unlike message
+    }
+
+    await post.save();
+
+    res.status(200).json({ success: true, message }); // 🟢 Send dynamic message
+  } catch (error) {
+    console.log("profile error", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
 };
+
 
 const getEditProfilePostController = async (req, res) => {
   const post = await postModel.findOne({ _id: req.params.id }).populate("user");
@@ -163,13 +179,21 @@ const getEditProfilePostController = async (req, res) => {
 const editProfilePostController = async (req, res) => {
   // const postId = req.params.id;
 
-  const post = await postModel.findByIdAndUpdate(
-    { _id: req.params.id },
-    { content: req.body.content },
-    { new: true }
-  );
-  // res.redirect("/profile");
-  res.status(200).json({ success: true, message: "content updated" });
+  try {
+    const post = await postModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      { content: req.body.content },
+      { new: true }
+    );
+    res.status(200).json({ success: true, message: "content updated" });
+  } catch (error) {
+    console.log("edit profile", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
 };
 
 // profilepic show
@@ -183,7 +207,6 @@ const profilePicController = async (req, res) => {
     }
     user.profilepic = req.file.filename;
     await user.save();
-    // res.redirect("profile");
     res.status(200).json({ success: true, message: "Pic upload successfully" });
   } catch (error) {
     console.log(error);
@@ -197,15 +220,21 @@ const profilePicController = async (req, res) => {
 
 // user see other user post
 const getAllPostSeeController = async (req, res) => {
-  // const user = await userModel
-  //   .findOne({ email: req.user.email })
-  //   .populate("posts");
-  const allUser = await userModel.find().populate("posts");
-  // console.log(allUser);
-  // res.render("userPost", { data: allUser, currentUserId: req.user.userId });
-  res
-    .status(200)
-    .json({ success: true, message: "data fatched", user: allUser });
+  try {
+    const allUser = await userModel.find().populate("posts");
+    res
+      .status(200)
+      .json({ success: true, message: "data fatched", user: allUser });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      });
+  }
 };
 
 // delete post
@@ -216,13 +245,11 @@ const deletePostController = async (req, res) => {
     res.status(200).json({ success: true, message: "post deleted" });
   } catch (error) {
     console.log("deletePost error", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Internal server error",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 

@@ -23,7 +23,7 @@ router.get("/logout", logutController);
 
 router.get("/profile", isLogedIn, getProfileController);
 router.post("/profile", isLogedIn, profileController);
-router.get("/likes/:id", isLogedIn, profileLikesController);
+router.post("/likes/:id", isLogedIn, profileLikesController);
 router.get("/edit/:id", isLogedIn, getEditProfilePostController);
 router.post("/update/:id", isLogedIn, editProfilePostController);
 router.post("/upload", isLogedIn, upload.single("image"), profilePicController);
